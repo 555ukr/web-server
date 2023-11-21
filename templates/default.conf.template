@@ -1,0 +1,15 @@
+
+
+proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=imgcache:10m  max_size=1g inactive=60m use_temp_path=off;
+
+server {
+    root /www/data;
+    listen 80;
+    server_name localhost;
+
+    location /images/ {
+        add_header X-Cache-Status $upstream_cache_status;
+        add_header X-Cache-Sas "lol";
+        proxy_cache imgcache;
+    }
+}
